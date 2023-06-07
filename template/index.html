@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Voice Translator</title>
+    <style>
+        body {
+            font-family: Verdana, sans-serif;
+            background-color: hsl(207, 100%, 76%); /* Light blue background */
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            padding-top: 20px;
+            font-size: 28px;
+            animation: fade-in 1s ease-in-out;
+        }
+
+        h2 {
+            text-align: center;
+            color: #33333340;
+            padding-top: 20px;
+            font-size: 28px;
+            animation: slide-up 1s ease-in-out;
+        }
+
+        p {
+            text-align: center;
+            color: #333333;
+            padding-top: 20px;
+            font-size: 28px;
+            animation: slide-up 1s ease-in-out;
+        }
+
+        form {
+            width: 50%;
+            margin: 20px auto;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            animation: fade-in 1s ease-in-out;
+        }
+
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slide-up {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+            font-size: 16px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        select {
+            padding: 5px;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        input[type="submit"] {
+            background-color: #3571c0;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 14px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3247bc;
+        }
+
+        .translated-text {
+            margin-top: 20px;
+            animation: slide-up 1s ease-in-out;
+        }
+
+        .translated-text h2 {
+            color: #333;
+            font-size: 20px;
+        }
+
+        .translated-text p {
+            color: #555;
+            font-size: 16px;
+        }
+
+        .translated-audio {
+            margin-top: 20px;
+            text-align: center;
+            animation: slide-up 1s ease-in-out;
+        }
+
+        .translated-audio h2 {
+            color: #333;
+            font-size: 20px;
+        }
+
+        audio {
+            margin-top: 10px;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Voice Translator</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="source_text">Enter Text:</label><br>
+        <textarea id="source_text" name="source_text" rows="4" cols="50"></textarea><br><br>
+        
+        <label for="source_language">Source Language:</label>
+        <select id="source_language" name="source_language">
+            <option value="en">English</option>
+            <option value="fr">French</option>
+            <option value="es">Spanish</option>
+            <option value="hi">Hindi</option>
+            <option value="mr">Marathi</option>
+            <!-- Add more language options as needed -->
+        </select><br><br>
+        
+        <label for="target_language">Target Language:</label>
+        <select id="target_language" name="target_language">
+            <option value="en">English</option>
+            <option value="fr">French</option>
+            <option value="es">Spanish</option>
+            <option value="hi">Hindi</option>
+            <option value="mr">Marathi</option>
+            <!-- Add more language options as needed -->
+        </select><br><br>
+        
+        <input type="submit" value="Translate">
+    </form>
+
+    {% if translated_text %}
+        <div class="translated-text">
+            <h2>Translated Text:</h2>
+            <p>{{ translated_text }}</p>
+        </div>
+    {% endif %}
+
+    <div class="translated-audio">
+        <h2>Translated Audio:</h2>
+        <audio controls>
+            <source src="{{ audio_url }}" type="audio/mpeg">
+        </audio>
+    </div>
+
+</body>
+</html>
